@@ -2581,6 +2581,19 @@ void QPdfEnginePrivate::drawTextItem(const QPointF &p, const QTextItemInt &ti)
     QFontEngine *fe = ti.fontEngine;
 
     QFontEngine::FaceId face_id = fe->faceId();
+    QByteArray filename = face_id.filename;
+
+    if (filename.isEmpty()) {
+        // HACKHACK (miller): Since webfonts don't have a file name, they can't be embedded on Linux.
+        // To allow for embedding web fonts, concatenate the family and styleName.
+        // This is probably not "strictly" legal (see https://github.com/qtproject/qtbase/blob/fb6000a74f57bd3c096f6a10142477bf2faf0ff2/src/gui/text/qfontengine.cpp#L2284),
+        // but it gets the job done for our purpose.
+
+       QFontDef fontDef = fe->fontDef;
+       QString fakeFilenameString = fontDef.family + fontDef.styleName;
+       face_id.filename = fakeFilenameString.toUtf8();
+    }
+
     bool noEmbed = false;
     if (!embedFonts
         || face_id.filename.isEmpty()
