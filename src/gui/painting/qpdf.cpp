@@ -2263,7 +2263,7 @@ int QPdfEnginePrivate::gradientBrush(const QBrush &b, const QTransform &matrix, 
                 "/Type /XObject\n"
                 "/Subtype /Form\n"
                 "/BBox [0 0 " << pageRect.width() << pageRect.height() << "]\n"
-                "/Group <</S /Transparency >>\n"
+                "/Group <</S /Transparency /CS DeviceGray >>\n"
                 "/Resources <<\n"
                 "/Shading << /Shader" << alphaShaderObject << alphaShaderObject << "0 R >>\n"
                 ">>\n";
@@ -2278,7 +2278,7 @@ int QPdfEnginePrivate::gradientBrush(const QBrush &b, const QTransform &matrix, 
             int softMaskFormObject = addXrefEntry(-1);
             write(form);
             *gStateObject = addXrefEntry(-1);
-            xprintf("<< /SMask << /S /Alpha /G %d 0 R >> >>\n"
+            xprintf("<< /SMask << /S /Luminosity /G %d 0 R >> >>\n"
                     "endobj\n", softMaskFormObject);
             currentPage->graphicStates.append(*gStateObject);
         }
