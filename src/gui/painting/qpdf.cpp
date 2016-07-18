@@ -2263,7 +2263,7 @@ int QPdfEnginePrivate::gradientBrush(const QBrush &b, const QTransform &matrix, 
                 "/Type /XObject\n"
                 "/Subtype /Form\n"
                 "/BBox [0 0 " << pageRect.width() << pageRect.height() << "]\n"
-                "/Group <</S /Transparency /CS DeviceGray >>\n"
+                "/Group <</S /Transparency /CS /DeviceGray >>\n"
                 "/Resources <<\n"
                 "/Shading << /Shader" << alphaShaderObject << alphaShaderObject << "0 R >>\n"
                 ">>\n";
